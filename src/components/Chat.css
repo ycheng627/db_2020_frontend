@@ -1,0 +1,283 @@
+:root {
+    --background-gray: rgb(224, 224, 224);
+    --box-darker-gray: rgb(200, 200, 200, 0.8);
+    --sender-color: rgb(100, 100, 100, 0.6);
+    --message-body-color: rgb(100, 100, 100, 0.6);
+    /* #eeeeee52 */
+}
+
+#MainContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    margin: 0 auto;
+    width: 100%;
+    background-color: white;
+    height: 100vh;
+    overflow: hidden;
+    /* font-size: 30px; */
+}
+
+#LeftPaneContainer {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: top;
+    font-size: 12px;
+    background: var(--background-gray);
+    display: flex;
+    flex-flow: column;
+    width: 25%;
+    height: 100vh;
+}
+
+#MidPaneContainer {
+    display: inline-block;
+    display: flex;
+    zoom: 1;
+    vertical-align: top;
+    font-size: 12px;
+    width: 50%;
+    height: 100vh;
+    background: var(--background-gray);
+    border-left: 10px solid rgba(0, 0, 0, 0.3);
+    border-right: 10px solid rgba(0, 0, 0, 0.3);
+    flex-flow: column;
+}
+
+#RightPaneContainer {
+    display: inline-block;
+    *display: inline;
+    zoom: 1;
+    vertical-align: top;
+    font-size: 12px;
+    width: 25%;
+    height: 100vh;
+    background: lightslategray;
+    /* flex-direction: row; */
+}
+
+#LeftTopBarContainer {
+    background: var(--background-gray);
+    display: flex;
+    height: 80px;
+    flex-direction: row;
+    flex: 0 0 auto;
+    align-content: center;
+    margin-right: 5px;
+}
+
+.LeftTopBarElement {
+    /* width: 100px; */
+    flex-basis: 100%;
+    flex: 0 0 0px;
+    /* width: 200px; */
+    text-align: center;
+    margin: auto;
+    /* background-color: white; */
+}
+
+.logo-icon {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+#AppNameUser {
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    /* border: 2px dashed #f69c55; */
+    font-size: 25px;
+}
+
+.Left-search-input {
+    font-size: 14px;
+    width: calc(100% - 25px);
+    height: calc(11% - 20px);
+    background: white;
+    border-radius: 10px;
+    margin-right: 15px;
+    margin-left: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    flex: 0 0 auto;
+}
+
+#LeftListOfChatRoom {
+    display: inline-block;
+    *display: inline;
+    overflow-y: auto;
+    zoom: 1;
+    vertical-align: top;
+    font-size: 12px;
+    width: 100%;
+    /* height: 100%; */
+    flex: 1 1 auto;
+    /* background:; */
+}
+
+.LeftIndividualChatRoom {
+    height: 70px;
+    /* border: 5px solid yellow; */
+    /* border-radius: 15px; */
+    margin: 5px;
+    margin-left: 0px;
+    margin-right: 0px;
+    background: var(--background-gray);
+    border-top: 2px solid transparent;
+    border-bottom: 2px solid transparent;
+    /* opacity: 80%; */
+    padding: 15px;
+}
+
+.LeftIndividualChatRoom.selected {
+    background: rgb(182, 182, 182);
+    /* opacity: 100%; */
+    /* border: 2px solid black;
+    margin: 3px; */
+    /* border-width: 2px; */
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+}
+
+.LeftIndividualChatRoom:hover {
+    /* border: 5px solid yellow; */
+    background: rgb(182, 182, 182);
+}
+
+.Chat-title {
+    font-size: 4vh;
+    height: calc(15% - 20px);
+    background: var(--box-darker-gray);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+}
+
+.Chat-messages {
+    font-size: 20px;
+    height: calc(70% - 20px);
+    background: var(--box-darker-gray);
+    background-clip: padding-box;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.Chat-input {
+    font-size: 14px;
+    width: calc(100% - 20px);
+    max-height: calc(25% - 20px);
+    min-height: calc(15% - 20px);
+    background: var(--box-darker-gray);
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+}
+
+.Chat-message {
+    font-size: 14px;
+    display: flex;
+    width: 70%;
+    margin-top: 20px;
+    flex: 0 1 auto;
+}
+
+.Chat-message.left {
+    flex-direction: row;
+    float: left;
+    margin-right: auto;
+}
+
+.Chat-message.right {
+    flex-direction: row-reverse;
+    float: right;
+    margin-left: auto;
+}
+
+.Chat-message-body {
+    background-color: var(--message-body-color);
+    flex: 0 1 90%;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.Chat-message-sender {
+    background-color: var(--sender-color);
+    flex: 0 1 30%;
+    height: 30px;
+    width: 30%;
+    box-sizing: border-box;
+    padding: 5px;
+    border-radius: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+.Chatroom-list-title {
+    font-size: 25px;
+    height: 50%;
+}
+
+.Chatroom-list-content {
+    height: 50%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    flex-direction: row;
+}
+
+.Chatroom-list-sender {
+    flex: 0 0 25%;
+    max-width: 25%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Chatroom-list-message {
+    /* flex: 0 1 60%; */
+    flex-grow: 0;
+    flex-shrink: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 60%;
+}
+
+.Chatroom-list-time {
+    padding-left: 10px;
+    flex: 0 0 20%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-track {
+    /* background-color: white; */
+    -webkit-box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: lightgrey;
+    -webkit-box-shadow: inset 0 0 2px rgb(0, 0, 0);
+}
