@@ -49,17 +49,28 @@ function App(props){
     const [sendingMessageBody, setSendingMessageBody] = useState("");
     const [leftFilter, setLeftFilter] = useState("");
     const [filteredChatRooms, setFilteredChatRooms] = useState([])
+    const [newMember, setNewMember] = useState("");
 
     
 
     useEffect(()=>{
         if(chatRooms.length > 0){
-            setSelectedChat(0)
+            setSelectedChat(chatRooms[0].id)
         }
     }, [chatRooms])
 
+    const findIndexFromID = (id)=>{
+        for(var i = 0; i < chatRooms.length; i++){
+            if(id === chatRooms[i].id){
+                console.log("the index is : ", i)
+                return i
+            }
+        }
+    }
+
     useEffect(()=>{
-        setChatContent(db.sampleChatContents[selectedChat])
+        setChatContent(db.sampleChatContents[findIndexFromID(selectedChat)])
+        console.log("new chat: ", selectedChat)
     }, [selectedChat])
 
     useEffect(()=>{
@@ -99,6 +110,27 @@ function App(props){
         setSendingMessageBody("");
     }
 
+    const setNewTitle = (evt)=>{
+        console.log(evt.target.value)
+        // Call backend for update
+        // Use the new initialized stuff to change chatContent and change chatList
+    }
+
+    const leaveChatRoom = (evt)=>{
+        alert("leaving chatroom")
+        // Call backend for update
+        // Use the new initialized stuff to change chatContent and change chatList
+    }
+
+    const addNewMember = (member, setMemberInput) => {
+        console.log(member)
+        alert(`Adding member to backend: ${member}`)
+        setMemberInput("")
+    }
+
+    const createNewChatroom = (evt) => {
+        alert("new room")
+    }
 
     if(!loggedIn){
         return (
@@ -125,9 +157,11 @@ function App(props){
             <div>
                 <Chat data={{username: username, cookie: cookie, chatRooms: filteredChatRooms, 
                     selectedChat: selectedChat, chatContent: chatContent, sendingMessageBody: sendingMessageBody,
-                    leftFilter: leftFilter}}
+                    leftFilter: leftFilter, newMember: newMember}}
                     handlers={{handleLogOut: handleLogOut, setSendingMessageBody: setSendingMessageBody, 
-                     sendMessage: sendMessage, changeChatRoom: changeChatRoom, setLeftFilter: setLeftFilter}}/>
+                     sendMessage: sendMessage, changeChatRoom: changeChatRoom, setLeftFilter: setLeftFilter,
+                     setNewTitle: setNewTitle, leaveChatRoom:leaveChatRoom, setNewMember: setNewMember,
+                     addNewMember: addNewMember, createNewChatroom:createNewChatroom}}/>
             </div>
         )
     }

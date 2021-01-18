@@ -7,56 +7,56 @@ const sampleChatRooms = [
         read: false
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 2,
         date: new Date('2020-02-02T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
         read: false
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 3,
         date: new Date('2021-01-01T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
-        read: false
+        read: true
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 4,
         date: new Date('2020-02-02T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
         read: false
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 5,
         date: new Date('2020-02-02T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
         read: false
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 6,
         date: new Date('2020-02-02T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
         read: false
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 7,
         date: new Date('2020-02-02T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
         read: false
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 8,
         date: new Date('2020-02-02T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
         read: false
     },
     {   name: "room 2", 
-        id: 212312,
+        id: 9,
         date: new Date('2020-02-02T02:02:02'),
         lastMessageText: "Short Message",
         lastMessageSender: "Short sender",
@@ -68,6 +68,7 @@ const sampleChatContents = [
     {
         name: "room 1",
         date: new Date('2019-01-01T01:01:01'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
             {
                 sender: "send1",
@@ -132,6 +133,7 @@ const sampleChatContents = [
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
             {
                 sender: "send1",
@@ -158,6 +160,7 @@ const sampleChatContents = [
     {
         name: "room 2",
         date: new Date('2021-01-01T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
             {
                 sender: "send1",
@@ -172,48 +175,56 @@ const sampleChatContents = [
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        people: ["test1", "test2", "test3", "test4"],
         messages: [
         ]
     },

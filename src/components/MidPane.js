@@ -3,6 +3,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Navlink, Switch, Route } from 'react-router-dom'
 import './Chat.css';
 import { Button, Input, message, Tag } from 'antd'
+import { faEdit} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 function MidPane(props) {
@@ -13,16 +15,51 @@ function MidPane(props) {
         messagesEndRef.current.scrollIntoView({ behavior: "auto" })
     }
 
+    const [tmpChatTitle, setTmpChatTitle] = useState("")
+    const [editTitle, setEditTitle] = useState(false)
+
+    useEffect(()=>{
+        if(props.data.chatContent != undefined){
+            setTmpChatTitle(props.data.chatContent.name)
+            setEditTitle(false)
+        }
+    }, [props.data.chatContent])
+
+
     useEffect(scrollToBottom, [props.data.chatContent]);
 
 
     return (
         <div id="MidPaneContainer">
             {/* <p> Selected Chat is: {props.data.selectedChat}</p> */}
-            <div className="Chat-title">
-                {props.data.chatContent != undefined?props.data.chatContent.name:"udef"}
-                {/* {props.data.chatContent.name} */}
-            </div>
+           
+                {editTitle == true?
+                    ( <div className="Chat_title_container">
+                        <input
+                            className="Chat_title"
+                            value={tmpChatTitle}
+                            onChange={(e) => setTmpChatTitle(e.target.value)}
+                            onKeyDown={(e) => {
+                                if(e.key === 'Enter'){
+                                    setEditTitle(false);
+                                    props.handlers.setNewTitle(e);
+                                }
+                            }
+                        }
+                        ></input>
+                    </div>):(
+
+                    <div className="Chat_title_container">
+                        <div className="Chat_title">
+                            {props.data.chatContent != undefined?tmpChatTitle:"udef"}
+                        </div>
+                        <div className="rename_button" onClick={(e) => {setEditTitle(true)}}>
+                            <FontAwesomeIcon icon={faEdit} className="logo-icon"/>
+                        </div>
+                    </div>
+                    )
+            }
+                
             <div className="Chat-messages">
 
                 {props.data.chatContent != undefined && props.data.chatContent.messages != undefined? (props.data.chatContent.messages.length === 0 ? (
@@ -43,7 +80,7 @@ function MidPane(props) {
                 ):( <p style={{ color: '#ccc' }}>
                 {'loading...'}
                 </p>)}
-                <div style={{ float:"left", clear: "both" }}
+                <div style={{ float:"left", clear: "both"}}
                     ref={messagesEndRef}>
                 </div>
             </div>
@@ -52,11 +89,15 @@ function MidPane(props) {
                 className="Chat-input"
                 placeholder="Message Body"
                 value={props.data.sendingMessageBody}
-                onChange={(e) => props.handlers.setSendingMessageBody(e.target.value)}
+                onChange={(e) => {
+                    if(e.target.value != '\n'){
+                        props.handlers.setSendingMessageBody(e.target.value)
+                    }
+                }}
                 onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                    props.handlers.sendMessage();
-                }
+                    if (e.key === 'Enter') {
+                        props.handlers.sendMessage();
+                    }
                 }}
             ></textarea>
 

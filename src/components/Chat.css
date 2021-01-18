@@ -14,13 +14,10 @@
     width: 100%;
     background-color: white;
     height: 100vh;
-    overflow: hidden;
     /* font-size: 30px; */
 }
 
 #LeftPaneContainer {
-    display: inline-block;
-    *display: inline;
     zoom: 1;
     vertical-align: top;
     font-size: 12px;
@@ -28,7 +25,7 @@
     display: flex;
     flex-flow: column;
     width: 25%;
-    height: 100vh;
+    /* height: 100vh; */
 }
 
 #MidPaneContainer {
@@ -46,15 +43,15 @@
 }
 
 #RightPaneContainer {
-    display: inline-block;
-    *display: inline;
     zoom: 1;
     vertical-align: top;
     font-size: 12px;
     width: 25%;
     height: 100vh;
-    background: lightslategray;
-    /* flex-direction: row; */
+    background: var(--background-gray);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 #LeftTopBarContainer {
@@ -113,7 +110,7 @@
     vertical-align: top;
     font-size: 12px;
     width: 100%;
-    /* height: 100%; */
+    height: 30%;
     flex: 1 1 auto;
     /* background:; */
 }
@@ -147,8 +144,7 @@
     background: rgb(182, 182, 182);
 }
 
-.Chat-title {
-    font-size: 4vh;
+.Chat_title_container {
     height: calc(15% - 20px);
     background: var(--box-darker-gray);
     border-radius: 10px;
@@ -156,6 +152,19 @@
     padding: 20px;
     box-sizing: border-box;
     flex: 1 1 auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.rename_button {
+    font-size: 4vh;
+    flex: 0 0 20%;
+}
+
+.Chat_title {
+    font-size: 4vh;
+    width: 15px;
+    flex: 0 0 95%;
 }
 
 .Chat-messages {
@@ -281,4 +290,75 @@
     border-radius: 10px;
     background-color: lightgrey;
     -webkit-box-shadow: inset 0 0 2px rgb(0, 0, 0);
+}
+
+.button_container {
+    flex: 0 0 5%;
+    padding: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* background-color: ; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.right_pane_button {
+    background-color: var(--box-darker-gray);
+    border: 10px;
+    padding: 5px;
+    width: 70%;
+    text-align: center;
+    border: 10px solid rgb(0, 0, 0, 0);
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.offset_5 {
+    flex: 0 0 5%;
+}
+
+.right_people_list {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    /* background: white; */
+    font-size: 18px;
+}
+
+.right_person {
+    background-color: var(--box-darker-gray);
+    margin: 0px;
+    border: solid 1px black;
+    width: 100%;
+    text-align: center;
+    flex: 0 0 0%;
+}
+
+.right-member-input {
+    font-size: 14px;
+    width: calc(100% - 25px);
+    height: calc(11% - 20px);
+    background: white;
+    border-radius: 10px;
+    margin: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    flex: 0 0 70%;
+}
+
+.add-new-member-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.add-member-button {
+    font-size: 14px;
+    height: calc(85% - 20px);
+    margin: 5px;
+    flex: 0 0 auto;
 }

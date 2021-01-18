@@ -50,9 +50,8 @@ function LeftPane(props) {
                 <div id="AppNameUser" className="LeftTopBarElement">
                     {props.data.username}
                 </div>
-                <div id="newRoom" className="LeftTopBarElement">
-                <FontAwesomeIcon icon={faPlus}  className="logo-icon"/>
-                    
+                <div id="newRoom" className="LeftTopBarElement" onClick={props.handlers.createNewChatroom}>
+                    <FontAwesomeIcon icon={faPlus}  className="logo-icon"/>
                 </div>
             </div>
             <input
@@ -66,9 +65,9 @@ function LeftPane(props) {
             // }
             ></input>
             <div id="LeftListOfChatRoom">
-                {props.data.chatRooms.map((chatroom, index)=>(
-                    <div key={index} className={index==props.data.selectedChat?"LeftIndividualChatRoom selected":"LeftIndividualChatRoom"} 
-                    id={index} onClick={(e) => {props.handlers.changeChatRoom(e, index)}}>
+                {props.data.chatRooms.map((chatroom)=>(
+                    <div key={chatroom.id} className={chatroom.id==props.data.selectedChat?"LeftIndividualChatRoom selected":"LeftIndividualChatRoom"} 
+                    id={chatroom.id} onClick={(e) => {props.handlers.changeChatRoom(e, chatroom.id)}}>
                         <div className="Chatroom-list-title">{chatroom.name} </div>
                         <div className="Chatroom-list-content"> 
                             <div className="Chatroom-list-sender">{chatroom.lastMessageSender}:  </div>
