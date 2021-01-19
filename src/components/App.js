@@ -451,6 +451,7 @@ function App(props){
         setChatRooms([])
         setChatContent({})
         setSelectedChat("")
+        changeTheme(2, false)
     }
 
     const changeChatRoom = (evt, id) =>{
@@ -525,9 +526,11 @@ function App(props){
         socket.emit("emoji_theme", {chatroom_id: selectedChat, emoji_index: emoji_in, theme_index: theme})
     }
 
-    const changeTheme = (theme_in)=>{
+    const changeTheme = (theme_in, do_emit=true)=>{
         setTheme(theme_in)
-        socket.emit("emoji_theme", {chatroom_id: selectedChat, emoji_index: emoji, theme_index: theme_in})
+        if(do_emit){
+            socket.emit("emoji_theme", {chatroom_id: selectedChat, emoji_index: emoji, theme_index: theme_in})
+        }
     }
 
     useEffect(()=>{
@@ -674,10 +677,7 @@ function App(props){
                 <form onSubmit={handleLogin}>
                     <label>
                     <h1 className="login-title"> NTU Chat 
-                    
-            {changeTheme(2)}
-            Chat: {selectedChat}
-            </h1>
+                    </h1>
                     <input
                         type="text"
                         placeholder="Username"
