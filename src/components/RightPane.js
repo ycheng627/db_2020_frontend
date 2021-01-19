@@ -13,7 +13,6 @@ function RightPane(props) {
                 <div className="right_pane_button" onClick={(e) => {props.handlers.leaveChatRoom(e)}}>
                     Leave Chatroom
                 </div>
-                
             </div>
             <div　className="right_people_list">
                 Members: 
@@ -26,9 +25,6 @@ function RightPane(props) {
                 (
                     <div> loading </div>
                 )}
-                
-            
-            <div className="offset_5">
             </div>
             <div className="add-new-member-container">
                 <input
@@ -40,10 +36,18 @@ function RightPane(props) {
                 <button onClick={(e) => {
                             props.handlers.addNewMember(props.data.newMember, props.handlers.setNewMember);
                     }} className="add-member-button">Invite</button>
-
-            </div>
             </div>
 
+            <div className="select-emoji">
+                Emoji:
+                <div className="emojis-container">
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌴")}}> 🌴 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🥛")}}> 🥛 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🐒")}}> 🐒 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🥺")}}> 🥺 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌐")}}> 🌐 </div>
+                </div>
+            </div>
         </div>
     )
 

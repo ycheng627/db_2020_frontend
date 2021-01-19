@@ -3,20 +3,18 @@ import { BrowserRouter } from 'react-router-dom';
 import { Navlink, Switch, Route } from 'react-router-dom'
 import './Chat.css';
 import { Button, Input, message, Tag } from 'antd'
-import { faEdit} from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
 function MidPane(props) {
-
     const messagesEndRef = useRef(null)
+    const [tmpChatTitle, setTmpChatTitle] = useState("")
+    const [editTitle, setEditTitle] = useState(false)
 
     const scrollToBottom = () => {
         messagesEndRef.current.scrollIntoView({ behavior: "auto" })
     }
-
-    const [tmpChatTitle, setTmpChatTitle] = useState("")
-    const [editTitle, setEditTitle] = useState(false)
 
     useEffect(()=>{
         if(props.data.chatContent != undefined){
@@ -25,14 +23,10 @@ function MidPane(props) {
         }
     }, [props.data.chatContent])
 
-
     useEffect(scrollToBottom, [props.data.chatContent]);
-
 
     return (
         <div id="MidPaneContainer">
-            {/* <p> Selected Chat is: {props.data.selectedChat}</p> */}
-           
                 {editTitle == true?
                     ( <div className="Chat_title_container">
                         <input
@@ -83,11 +77,11 @@ function MidPane(props) {
                 <div style={{ float:"left", clear: "both"}}
                     ref={messagesEndRef}>
                 </div>
-            </div>
-            {/* <div > */}
+            </div >
+            <div className="Chat-input-container">
                 <textarea
                 className="Chat-input"
-                placeholder="Message Body"
+                placeholder="Message Body 🐑"
                 value={props.data.sendingMessageBody}
                 onChange={(e) => {
                     if(e.target.value != '\n'){
@@ -96,15 +90,19 @@ function MidPane(props) {
                 }}
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') {
-                        props.handlers.sendMessage();
+                        props.handlers.sendMessage(props.data.sendingMessageBody);
                     }
                 }}
-            ></textarea>
-
-            {/* </div> */}
-            
-
-
+                ></textarea>
+                {props.data.sendingMessageBody === ""? (
+                        <div className="send-icon" onClick={(e) => { props.handlers.sendMessage(props.data.emoji)}}>{props.data.emoji}</div>
+                    ) : (
+                        <div className="send-icon" onClick={(e) => { props.handlers.sendMessage(props.data.sendingMessageBody)}}>
+                            <FontAwesomeIcon icon={faPaperPlane} className="logo-icon"/>
+                        </div>
+                    )
+                }
+            </div>
         </div>
     )
 

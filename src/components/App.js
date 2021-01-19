@@ -50,6 +50,7 @@ function App(props){
     const [leftFilter, setLeftFilter] = useState("");
     const [filteredChatRooms, setFilteredChatRooms] = useState([])
     const [newMember, setNewMember] = useState("");
+    const [emoji, setEmoji] = useState("");
 
     
 
@@ -86,6 +87,12 @@ function App(props){
         setFilteredChatRooms(chatRooms.filter(matchName))
     }, [chatRooms, leftFilter])
 
+    useEffect(()=>{
+        if(chatContent !== undefined && chatContent.emoji !== undefined){
+            setEmoji(chatContent.emoji)
+        }
+    }, [chatContent])
+
     const handleSubmit = (evt) => {
         evt.preventDefault();
         setLoggedIn(true)
@@ -105,15 +112,20 @@ function App(props){
         setSelectedChat(id)
     }
 
-    const sendMessage = (evt)=>{
-        alert("send to backend API");
+    const sendMessage = (str)=>{
+        alert(`send to backend API ${str}`);
         setSendingMessageBody("");
     }
 
     const setNewTitle = (evt)=>{
-        console.log(evt.target.value)
+        alert(evt.target.value)
         // Call backend for update
         // Use the new initialized stuff to change chatContent and change chatList
+    }
+
+    const changeEmoji = (emoji)=>{
+        alert(`Changing emoji to ${emoji}`)
+        setEmoji(emoji)
     }
 
     const leaveChatRoom = (evt)=>{
@@ -128,28 +140,40 @@ function App(props){
         setMemberInput("")
     }
 
-    const createNewChatroom = (evt) => {
-        alert("new room")
+    const createNewChatroom = (newName, setNewName) => {
+        alert(`new room: ${newName}`)
+        setNewName("")
     }
 
     if(!loggedIn){
         return (
-        <form onSubmit={handleSubmit}>
-            <label>
-            First username:
-            <input
-                type="text"
-                value={username}
-                onChange={e => setUsername(e.target.value)}
-            />
-            <input
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-            />
-            </label>
-            <input type="submit" value="Log In" />
-        </form>
+        <div className="login-background">
+            <div className="center-center">
+                <form onSubmit={handleSubmit}>
+                    <label>
+                    <h1 className="login-title"> NTU Chat </h1>
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        value={username}
+                        onChange={e => setUsername(e.target.value)}
+                        className="login-input"
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={e => setPassword(e.target.value)}
+                        className="login-input"
+                    />
+                    </label>
+                    <div className="button_container">
+                        <input type="submit" value="Login / Register" className="login-button"/>
+
+                    </div>
+                </form>
+            </div>
+        </div>
         );
     }
     else{
@@ -157,11 +181,11 @@ function App(props){
             <div>
                 <Chat data={{username: username, cookie: cookie, chatRooms: filteredChatRooms, 
                     selectedChat: selectedChat, chatContent: chatContent, sendingMessageBody: sendingMessageBody,
-                    leftFilter: leftFilter, newMember: newMember}}
+                    leftFilter: leftFilter, newMember: newMember, emoji: emoji}}
                     handlers={{handleLogOut: handleLogOut, setSendingMessageBody: setSendingMessageBody, 
                      sendMessage: sendMessage, changeChatRoom: changeChatRoom, setLeftFilter: setLeftFilter,
                      setNewTitle: setNewTitle, leaveChatRoom:leaveChatRoom, setNewMember: setNewMember,
-                     addNewMember: addNewMember, createNewChatroom:createNewChatroom}}/>
+                     addNewMember: addNewMember, createNewChatroom:createNewChatroom, changeEmoji: changeEmoji}}/>
             </div>
         )
     }

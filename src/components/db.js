@@ -67,6 +67,8 @@ const sampleChatRooms = [
 const sampleChatContents = [
     {
         name: "room 1",
+        id: 1,
+        emoji: "🌴",
         date: new Date('2019-01-01T01:01:01'),
         people: ["test1", "test2", "test3", "test4"],
         messages: [
@@ -133,6 +135,8 @@ const sampleChatContents = [
     {
         name: "room 2",
         date: new Date('2020-02-02T02:02:02'),
+        id: 2,
+        emoji: "🥛",
         people: ["test1", "test2", "test3", "test4"],
         messages: [
             {

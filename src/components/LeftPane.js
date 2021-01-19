@@ -1,17 +1,14 @@
 import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Navlink, Switch, Route } from 'react-router-dom'
-
 import { faSignOutAlt, faPlus} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
+import Popup from 'reactjs-popup';
 
 import './Chat.css';
 
 function LeftPane(props) {
-    // console.log("Chat Rooms", props.data.chatRooms)
-    // console.log(。)
-
+    const [newRoomName, setNewRoomName] = useState("")
     const msToTime = (millis) =>{
         var seconds = (millis / 1000).toFixed(0);
         var minutes = (seconds / 60).toFixed(0);
@@ -31,7 +28,6 @@ function LeftPane(props) {
         if(weeks < 55)
             return `${weeks}w`;
         return `${years}y`
-
     }
 
     const getLastTime = (lastSendDate) =>{
@@ -50,19 +46,42 @@ function LeftPane(props) {
                 <div id="AppNameUser" className="LeftTopBarElement">
                     {props.data.username}
                 </div>
-                <div id="newRoom" className="LeftTopBarElement" onClick={props.handlers.createNewChatroom}>
+
+                <Popup trigger={<div id="newRoom" className="LeftTopBarElement">
                     <FontAwesomeIcon icon={faPlus}  className="logo-icon"/>
-                </div>
+                </div>} 
+                modal>
+                     {close => (
+                        <div className="popup">
+                            <a className="close" onClick={close}>
+                                &times;
+                            </a>
+                            <h3> Room Name: </h3>
+                            <div className="content">
+                            <input
+                                className="Left-search-input"
+                                placeholder="New Room Name"
+                                value={newRoomName}
+                                onChange={(e) => setNewRoomName(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if(e.key === 'Enter'){
+                                        props.handlers.createNewChatroom(newRoomName, setNewRoomName);
+                                        close();
+                                    }
+                                }
+                            }
+                            ></input>
+                            </div>
+                        </div>
+                        )}
+                </Popup>
+                
             </div>
             <input
                 className="Left-search-input"
                 placeholder="Search Rooms"
                 value={props.data.leftFilter}
                 onChange={(e) => props.handlers.setLeftFilter(e.target.value)}
-                // onKeyDown={(e) => {
-                //     props.handlers.sendMessage();
-                // }
-            // }
             ></input>
             <div id="LeftListOfChatRoom">
                 {props.data.chatRooms.map((chatroom)=>(
