@@ -7,6 +7,7 @@ import theme from "./theme"
 
 
 function App(props){
+
     function useLocalStorage(key, initialValue) {
         const [storedValue, setStoredValue] = useState(() => {
           try {
@@ -20,12 +21,9 @@ function App(props){
         });
       
       const setValue = value => {
-      
           try {
             const valueToStore =
-      
               value instanceof Function ? value(storedValue) : value;
-
             setStoredValue(valueToStore);
          window.localStorage.setItem(key, JSON.stringify(valueToStore));
       
@@ -139,6 +137,7 @@ function App(props){
                 ` ${t[property]}`
             );
         }
+        alert(`send to backend: ${themeID}`)
 
         
     }

@@ -48,6 +48,18 @@ function RightPane(props) {
                     <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌐")}}> 🌐 </div>
                 </div>
             </div>
+            <div className="offset_5">
+            </div>
+            <div className="select-emoji">
+                Theme:
+                <div className="emojis-container">
+                    <div className="emoji" style={{backgroundColor: "#cceca4"}} onClick={(e) => {props.handlers.changeTheme(0)}}></div>
+                    <div className="emoji" style={{backgroundColor: "#d5b9a1"}} onClick={(e) => {props.handlers.changeTheme(1)}}></div>
+                    <div className="emoji" style={{backgroundColor: "#bebdbc"}} onClick={(e) => {props.handlers.changeTheme(2)}}></div>
+                    <div className="emoji" style={{backgroundColor: "#f5e1a5"}} onClick={(e) => {props.handlers.changeTheme(3)}}></div>
+                    <div className="emoji" style={{backgroundColor: "#b3e6ea"}} onClick={(e) => {props.handlers.changeTheme(4)}}></div>
+                </div>
+            </div>
         </div>
     )
 
