@@ -1,7 +1,3 @@
-import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Navlink, Switch, Route } from 'react-router-dom'
-import Popup from 'reactjs-popup';
 import './Chat.css';
 
 function RightPane(props) {
@@ -16,10 +12,10 @@ function RightPane(props) {
             </div>
             <div　className="right_people_list">
                 Members: 
-                {props.data.chatContent!=undefined && props.data.chatContent.people!=undefined? 
+                {props.data.chatContent!==undefined && props.data.chatContent.people!==undefined? 
                 (
                     props.data.chatContent.people.map((person, i) => (
-                    <div className="right_person">{person}</div>
+                    <div key={i} className="right_person">{person}</div>
                 )))
                 : 
                 (
@@ -32,6 +28,11 @@ function RightPane(props) {
                     placeholder="Add Member"
                     value={props.data.newMember}
                     onChange={(e) => props.handlers.setNewMember(e.target.value)}
+                    onKeyDown={(e) => {
+                        if(e.key === 'Enter'){
+                            props.handlers.addNewMember(props.data.newMember, props.handlers.setNewMember);
+                        }
+                    }}
                 ></input>
                 <button onClick={(e) => {
                             props.handlers.addNewMember(props.data.newMember, props.handlers.setNewMember);
@@ -41,11 +42,11 @@ function RightPane(props) {
             <div className="select-emoji">
                 Emoji:
                 <div className="emojis-container">
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌴")}}> 🌴 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🥛")}}> 🥛 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🐒")}}> 🐒 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🥺")}}> 🥺 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌐")}}> 🌐 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(0)}}> 🌴 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(1)}}> 🥛 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(2)}}> 🐒 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(3)}}> 🥺 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(4)}}> 🌐 </div>
                 </div>
             </div>
             <div className="offset_5">

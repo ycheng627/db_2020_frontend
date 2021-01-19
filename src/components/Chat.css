@@ -521,3 +521,7 @@
     font-size: 18px;
     color: var(--emoji-background);
 }
+
+.bold {
+    font-weight: bold;
+}

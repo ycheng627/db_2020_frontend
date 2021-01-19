@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Navlink, Switch, Route } from 'react-router-dom'
 import { faSignOutAlt, faPlus} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Popup from 'reactjs-popup';
@@ -86,13 +84,15 @@ function LeftPane(props) {
             ></input>
             <div id="LeftListOfChatRoom">
                 {props.data.chatRooms.map((chatroom)=>(
-                    <div key={chatroom.id} className={chatroom.id==props.data.selectedChat?"LeftIndividualChatRoom selected":"LeftIndividualChatRoom"} 
+                    <div key={chatroom.id} className={`LeftIndividualChatRoom ${chatroom.id===props.data.selectedChat? "selected" : ""} ${chatroom.last_send_date>=chatroom.last_read_date? "bold" : ""}`}
+                    
+                    
                     id={chatroom.id} onClick={(e) => {props.handlers.changeChatRoom(e, chatroom.id)}}>
                         <div className="Chatroom-list-title">{chatroom.name} </div>
                         <div className="Chatroom-list-content"> 
-                            <div className="Chatroom-list-sender">{chatroom.lastMessageSender}:  </div>
-                            <div className="Chatroom-list-message">  {chatroom.lastMessageText}</div>
-                            <div className="Chatroom-list-time">{getLastTime(chatroom.date)}</div>
+                            <div className="Chatroom-list-sender">{chatroom.last_sender}:  </div>
+                            <div className="Chatroom-list-message">  {chatroom.last_message}</div>
+                            <div className="Chatroom-list-time">{getLastTime(chatroom.last_send_date)}</div>
                         
                         </div>
                     </div>
