@@ -5,6 +5,13 @@
     --message-body-color: rgb(91, 87, 83);
     --hover-color: rgba(190, 189, 188, 0.5);
     --selected-color: rgb(190, 189, 188);
+    --emoji-background: rgb(71, 67, 63);
+    --search-background: rgb(245, 245, 245);
+    --divider-color: rgba(71, 67, 63, 0.3);
+    --icon-hover: rgb(159, 178, 189);
+    --message-text-color: rgb(245, 245, 245);
+    --list-box-color: rgb(71, 67, 63);
+    --popup-background: rgb(245, 245, 245, 0.7);
 }
 
 #MainContainer {
@@ -13,7 +20,6 @@
     align-items: stretch;
     margin: 0 auto;
     width: 100%;
-    background-color: rgb(245, 245, 245);
     height: 100vh;
     /* font-size: 30px; */
 }
@@ -22,7 +28,6 @@
     zoom: 1;
     vertical-align: top;
     font-size: 12px;
-    color: rgb(71, 67, 63);
     background: var(--background-gray);
     display: flex;
     flex-flow: column;
@@ -36,12 +41,11 @@
     zoom: 1;
     vertical-align: top;
     font-size: 12px;
-    color: rgb(71, 67, 63);
     width: 50%;
     height: 100vh;
     background: var(--background-gray);
-    border-left: 2px solid rgba(71, 67, 63, 0.3);
-    border-right: 2px solid rgba(71, 67, 63, 0.3);
+    border-left: 2px solid var(--divider-color);
+    border-right: 2px solid var(--divider-color);
     flex-flow: column;
 }
 
@@ -49,7 +53,6 @@
     zoom: 1;
     vertical-align: top;
     font-size: 12px;
-    color: rgb(71, 67, 63);
     width: 25%;
     height: 100vh;
     background: var(--background-gray);
@@ -69,13 +72,10 @@
 }
 
 .LeftTopBarElement {
-    /* width: 100px; */
     flex-basis: 100%;
     flex: 0 0 0px;
-    /* width: 200px; */
     text-align: center;
     margin: auto;
-    /* background-color: white; */
 }
 
 .logo-icon {
@@ -87,7 +87,6 @@
     height: 50px;
     line-height: 50px;
     text-align: center;
-    /* border: 2px dashed #f69c55; */
     font-size: 25px;
     font-weight: 750;
 }
@@ -96,7 +95,7 @@
     font-size: 14px;
     width: calc(100% - 25px);
     height: calc(11% - 20px);
-    background: rgb(245, 245, 245);
+    background: var(--search-background);
     border: 0;
     border-radius: 8px;
     outline: 0;
@@ -132,12 +131,10 @@
     background: var(--background-gray);
     border-top: 2px solid transparent;
     border-bottom: 2px solid transparent;
-    /* opacity: 80%; */
     padding: 15px;
 }
 
 .LeftIndividualChatRoom:hover {
-    /* border: 5px solid yellow; */
     background: var(--hover-color);
     border-radius: 8px;
 }
@@ -145,10 +142,6 @@
 .LeftIndividualChatRoom.selected {
     background: var(--selected-color);
     border-radius: 8px;
-    /* opacity: 100%; */
-    /* border: 2px solid black;
-    margin: 3px; */
-    /* border-width: 2px; */
 }
 
 .Chat_title_container {
@@ -169,13 +162,7 @@
 }
 
 .rename_button:hover {
-    color: rgb(159, 178, 189);
-    /*transition: color 0.1s ease-out;*/
-}
-
-.rename_button:hover {
-    color: rgb(159, 178, 189);
-    /*transition: color 0.1s ease-out;*/
+    color: var(--icon-hover);
 }
 
 .Chat_title {
@@ -187,7 +174,7 @@
 
 .Chat-messages {
     font-size: 20px;
-    color: rgb(245, 245, 245);
+    color: var(--message-text-color);
     height: calc(70% - 20px);
     background: var(--box-darker-gray);
     background-clip: padding-box;
@@ -213,7 +200,7 @@
     /* width: calc(80% - 20px); */
     width: 50px;
     height: calc(100%-25px);
-    background: rgb(245, 245, 245);
+    background: var(--search-background);
     border: 0;
     border-radius: 8px;
     outline: 0;
@@ -353,12 +340,12 @@
     border-radius: 10px;
     font-size: 18px;
     font-weight: 600;
-    color: rgb(245, 245, 245);
+    color: var(--message-text-color);
     cursor: pointer;
 }
 
 .right_pane_button:hover {
-    background-color: rgb(159, 178, 189);
+    background-color: var(--icon-hover);
     /*transition: background-color 0.1s ease-out;*/
     cursor: pointer;
 }
@@ -375,7 +362,7 @@
     align-items: center;
     /* background: white; */
     font-size: 18px;
-    color: rgb(71, 67, 63);
+    color: var(--list-box-color);
 }
 
 .right_person {
@@ -392,7 +379,7 @@
     font-size: 14px;
     width: calc(100% - 25px);
     height: calc(11% - 20px);
-    background: rgb(245, 245, 245);
+    background: var(--search-background);
     border-radius: 4px;
     border: 0;
     outline: 0;
@@ -413,14 +400,14 @@
     border: 0;
     border-radius: 4px;
     font-size: 14px;
-    color: rgb(245, 245, 245);
+    color: var(--message-text-color);
     height: calc(85% - 20px);
     margin: 5px;
     flex: 0 0 auto;
 }
 
 .add-member-button:hover {
-    background-color: rgb(159, 178, 189);
+    background-color: var(--icon-hover);
     /*transition: background-color 0.1s ease-out;*/
     cursor: pointer;
 }
@@ -431,7 +418,6 @@
     padding: 20px 20px 20px;
     margin-top: 10%;
     width: 50%;
-    background: white;
     border-radius: 30px;
     -webkit-box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
     box-shadow: 0 0 200px rgba(255, 255, 255, 0.5), 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -448,7 +434,7 @@
     font-size: 14px;
     width: calc(100% - 25px);
     height: calc(11% - 20px);
-    background: rgb(245, 245, 245);
+    background: var(--search-background);
     border: 0;
     border-radius: 8px;
     outline: 0;
@@ -470,7 +456,7 @@
     border-radius: 10px;
     font-size: 18px;
     font-weight: 600;
-    color: rgb(245, 245, 245);
+    color: var(--message-text-color);
     cursor: pointer;
     width: 50%;
 }
@@ -484,7 +470,7 @@
     width: 500px;
     height: 150px;
     padding: 10px;
-    background: rgb(245, 245, 245, 0.7);
+    background: var(--popup-background);
     border: solid 10px grey;
     border-radius: 10px;
     backdrop-filter: blur(10px);
@@ -516,10 +502,12 @@
 .emoji {
     flex: 1 1 auto;
     background-color: var(--box-darker-gray);
-    border: solid 1px black;
+    border: 0;
+    border-radius: 8px;
     text-align: center;
     cursor: pointer;
-    margin-left: 3px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .select-emoji {
@@ -531,5 +519,5 @@
     align-items: center;
     /* background: white; */
     font-size: 18px;
-    color: rgb(71, 67, 63);
+    color: var(--emoji-background);
 }

@@ -7,6 +7,11 @@ import db from "./db"
 
 function App(props){
 
+    // document.documentElement.style.setProperty(
+    //     '--background-gray',
+    //     'white'
+    //   );
+
     function useLocalStorage(key, initialValue) {
         const [storedValue, setStoredValue] = useState(() => {
           try {
