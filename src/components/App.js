@@ -3,15 +3,10 @@ import {BrowserRouter} from 'react-router-dom';
 import {Navlink, Switch, Route} from 'react-router-dom'
 import Chat from "./Chat"
 import db from "./db"
+import theme from "./theme"
 
 
 function App(props){
-
-    // document.documentElement.style.setProperty(
-    //     '--background-gray',
-    //     'white'
-    //   );
-
     function useLocalStorage(key, initialValue) {
         const [storedValue, setStoredValue] = useState(() => {
           try {
@@ -133,6 +128,21 @@ function App(props){
         setEmoji(emoji)
     }
 
+    const changeTheme = (themeID)=>{   
+        var t = theme[themeID];  
+        
+        console.log(t)
+        for (const property in t) {
+            console.log(`${property}: ${t[property]}`);
+            document.documentElement.style.setProperty(
+                `${property}`,
+                ` ${t[property]}`
+            );
+        }
+
+        
+    }
+
     const leaveChatRoom = (evt)=>{
         alert("leaving chatroom")
         // Call backend for update
@@ -190,7 +200,8 @@ function App(props){
                     handlers={{handleLogOut: handleLogOut, setSendingMessageBody: setSendingMessageBody, 
                      sendMessage: sendMessage, changeChatRoom: changeChatRoom, setLeftFilter: setLeftFilter,
                      setNewTitle: setNewTitle, leaveChatRoom:leaveChatRoom, setNewMember: setNewMember,
-                     addNewMember: addNewMember, createNewChatroom:createNewChatroom, changeEmoji: changeEmoji}}/>
+                     addNewMember: addNewMember, createNewChatroom:createNewChatroom, changeEmoji: changeEmoji,
+                     changeTheme: changeTheme}}/>
             </div>
         )
     }
