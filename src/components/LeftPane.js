@@ -29,7 +29,7 @@ function LeftPane(props) {
     }
 
     const getLastTime = (lastSendDate) =>{
-        var a = msToTime(Number(Date.now() - new Date(lastSendDate).getTime()))
+        var a = msToTime(Number((Date.now()) - new Date(lastSendDate).getTime()))
         return(a)
     }
 

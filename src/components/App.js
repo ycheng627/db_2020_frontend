@@ -1,13 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Chat from "./Chat"
 import db from "./db"
-import theme from "./theme"
+import theme_arr from "./theme"
 
-// import socketIOClient from "socket.io-client";
-// const ENDPOINT = "ws://34.80.122.70:5000/";
-
-// const socket = socketIOClient(ENDPOINT);
-    
 
 import socketIOClient from "socket.io-client";
 const ENDPOINT = "ws://34.80.122.70:5000/";
@@ -53,10 +48,16 @@ function App(props){
     const [leftFilter, setLeftFilter] = useState("");
     const [filteredChatRooms, setFilteredChatRooms] = useState(["fwef"])
     const [newMember, setNewMember] = useState("");
-    const [emoji, setEmoji] = useState("");
+    const [emoji, setEmoji] = useState(0);
+    const [theme, setTheme] = useState(2);
     const [initialized, setInitialized] = useState(false);
     const [recvMessage, setRecvMessage] = useState("");
     const [recvRoom, setRecvRoom] = useState("");
+    const [recvLeave, setRecvLeave] = useState("");
+    const [recvJoin, setRecvJoin] = useState("");
+    const [recvTitle, setRecvTitle] = useState("");
+    const [recvEmojiTheme, setRecvEmojiTheme] = useState("");
+    
     
     useEffect(()=>{
         if(!initialized){
@@ -68,7 +69,17 @@ function App(props){
             
             socket.on('invite', (data) =>{
                 setRecvRoom(data.chatroom_name)
-                socket.emit("accept")
+                socket.emit("join", {chatroom_name: data.chatroom_name})
+            })
+
+            socket.on('member_left', (data)=>{
+                console.log("member left")
+                setRecvLeave(data)
+            })
+
+            socket.on('new_members', (data)=>{
+                console.log("member changed")
+                setRecvJoin(data)
             })
             
             socket.on('message', (data) =>{
@@ -80,30 +91,109 @@ function App(props){
                 console.log(data); // true
             })
 
+            socket.on('chatroom_name_changed', (data) => {
+                setRecvTitle(data)
+                alert("room changed!")
+                console.log(data); // true
+            })
+
+            socket.on('emoji_theme_out', (data) => {
+                setRecvEmojiTheme(data)
+                console.log(data); // true
+            })
+
             setInitialized(true)
         }
     }, [initialized])
 
     useEffect(()=>{
-        if(chatContent !== undefined && chatContent.messages !== undefined){
+        console.log("received message: id, selecetd")
+        console.log(typeof recvMessage.room_id)
+        console.log(typeof selectedChat)
+        console.log(recvMessage.room_id)
+        console.log(selectedChat)
+        console.log(chatContent !== undefined)
+        console.log(chatContent.messages !== undefined)
+        console.log(recvMessage.room_id == selectedChat)
+        if(chatContent !== undefined && chatContent.messages !== undefined && recvMessage.room_id == selectedChat){
+            console.log("adding a new message")
             var tmpChatContent = Object.assign({}, chatContent);
             tmpChatContent.messages.push(recvMessage)
             setChatContent(tmpChatContent)
         }
 
         if(chatRooms !== undefined){
-            var i = findIndexFromID(selectedChat)
+            var i = findIndexFromID(recvMessage.room_id)
             if(i != -1){
                 var tmpChatrooms = chatRooms.slice()
                 tmpChatrooms[i].last_sender = recvMessage.sender
                 tmpChatrooms[i].last_message = recvMessage.body
                 tmpChatrooms[i].last_send_date = Date.now()
+                
+                tmpChatrooms.sort( compare );
+
                 setChatRooms(tmpChatrooms)
             }
         }
     }, [recvMessage])
 
     useEffect(()=>{
+        console.log(recvEmojiTheme)
+        if(chatContent !== undefined && chatContent.messages !== undefined && selectedChat === recvEmojiTheme.room_id){
+            var tmpChatContent = Object.assign({}, chatContent);
+            tmpChatContent.emoji = recvEmojiTheme.emoji_index
+            tmpChatContent.theme = recvEmojiTheme.theme_index
+            setChatContent(tmpChatContent)
+        }
+    }, [recvEmojiTheme])
+
+    useEffect(()=>{
+        console.log("someone leave")
+        console.log(recvLeave)
+        if(chatContent !== undefined && chatContent.messages !== undefined && selectedChat === recvLeave.room_id){
+            var tmpChatContent = Object.assign({}, chatContent);
+            tmpChatContent.people.splice(tmpChatContent.people.indexOf(recvLeave.left_member), 1);
+            setChatContent(tmpChatContent)
+        }
+    }, [recvLeave])
+
+    useEffect(()=>{
+        console.log("someone leave")
+        console.log(recvTitle)
+        if(selectedChat === recvTitle.room_id){
+            alert("changing is here")
+            selectedChat = recvTitle.new_name
+            var tmpChatContent = Object.assign({}, chatContent);
+            tmpChatContent.name = recvTitle.new_name
+            setChatContent(tmpChatContent)
+        }
+        
+        var ind = findIndexFromID(recvTitle.room_id)
+        if(ind == -1){
+            return
+        }
+        var tmpChatrooms = chatRooms.slice()
+        tmpChatrooms[ind].name = recvTitle.new_name
+        tmpChatrooms.sort(compare)
+        setChatRooms(tmpChatrooms)
+
+    }, [recvTitle])
+
+    useEffect(()=>{
+        console.log("someone join")
+        console.log(recvJoin)
+        if(chatContent !== undefined && chatContent.messages !== undefined && selectedChat === recvJoin.room_id){
+            var tmpChatContent = Object.assign({}, chatContent);
+            tmpChatContent.people = recvJoin.members
+            setChatContent(tmpChatContent)
+        }
+    }, [recvJoin])
+
+
+    useEffect(()=>{
+        if(recvRoom === ""){
+            return
+        }
         var formdata = new FormData();
         formdata.append("username", username);
         formdata.append("cookie", cookie);
@@ -122,6 +212,8 @@ function App(props){
             console.log("this is my chatroom list")
             console.log(result)
             result = JSON.parse(result)
+            console.log("this is what I got from calling the API")
+            console.log(result)
             var tmpChatroom = result["data"]
             tmpChatroom.sort( compare );
             setChatRooms(tmpChatroom)
@@ -130,11 +222,14 @@ function App(props){
             console.log('error', error)
             // alert("Can't Connect to Server")
         });
-
+        
+        setRecvRoom("")
     }, [recvRoom])
 
 
     useEffect(()=>{
+        console.log("these are chatrooms")
+        console.log(chatRooms)
         for(var i in chatRooms){
             var obj = {chatroom_name: chatRooms[i].name}
             socket.emit('join', obj)
@@ -154,6 +249,8 @@ function App(props){
         }
         return -1
     }
+
+    
 
     const findContentIndexFromChatID = (id)=>{
         for(var i = 0; i < db.sampleChatContents.length; i++){
@@ -183,18 +280,6 @@ function App(props){
             return 1;
         }
         return 0;
-    }
-    
-    const newChatListObject = (roomName)=>{
-        return {   
-            name: roomName, 
-            id: roomName,
-            last_send_date: Date.now(),
-            last_read_date: Date.now(),
-            last_message: "",
-            last_sender: "",
-            read: false
-        }
     }
 
     useEffect(()=>{
@@ -232,6 +317,7 @@ function App(props){
             console.log("this is selected:")
             console.log(selectedChat)
             tmpChatrooms[findIndexFromID(selectedChat)].last_read_date = Date.now();
+            tmpChatrooms.sort(compare)
             setChatRooms(tmpChatrooms)
         }
         
@@ -240,10 +326,10 @@ function App(props){
 
     useEffect(()=>{
         function compare( a, b ) {
-            if ( a.last_send_date > b.last_send_date ){
+            if ( new Date(a.last_send_date).getTime() > new Date(b.last_send_date).getTime() ){
                 return -1;
             }
-            if ( a.last_send_date < b.last_send_date ){
+            if ( new Date(a.last_send_date).getTime() < new Date(b.last_send_date).getTime() ){
                 return 1;
             }
             return 0;
@@ -269,6 +355,9 @@ function App(props){
                 console.log("this is my chatroom list")
                 console.log(result)
                 result = JSON.parse(result)
+                
+                console.log("this is what I got from API")
+                console.log(result)
                 var tmpChatroom = result["data"]
                 tmpChatroom.sort( compare );
                 setChatRooms(tmpChatroom)
@@ -293,6 +382,7 @@ function App(props){
         console.log(chatContent)
         if(chatContent !== undefined && chatContent.emoji !== undefined){
             setEmoji(chatContent.emoji)
+            setTheme(chatContent.theme)
         }
     }, [chatContent])
 
@@ -361,6 +451,7 @@ function App(props){
         setChatRooms([])
         setChatContent({})
         setSelectedChat("")
+        changeTheme(2)
     }
 
     const changeChatRoom = (evt, id) =>{
@@ -375,6 +466,10 @@ function App(props){
         if(msg === ""){
             return
         }
+
+        alert(findNameFromID(selectedChat))
+        console.log("The chatroom name is:")
+        console.log(findNameFromID(selectedChat))
         socket.emit('message', {username: username, chatroom_name: findNameFromID(selectedChat), content: msg})
 
         //date.now
@@ -383,29 +478,61 @@ function App(props){
     }
 
     const setNewTitle = (title)=>{
-        alert(title)
+        // alert(title)
 
-        var tmpChatContent = Object.assign({}, chatContent);
-        tmpChatContent.name = title
-        console.log("updating Chat Content: ")
-        console.log(chatContent)
-        setChatContent(tmpChatContent)
+        // var tmpChatContent = Object.assign({}, chatContent);
+        // tmpChatContent.name = title
+        // console.log("updating Chat Content: ")
+        // console.log(chatContent)
+        // setChatContent(tmpChatContent)
 
-        var tmpChatrooms = chatRooms.slice()
-        tmpChatrooms[findIndexFromID(selectedChat)].name = title
-        setChatRooms(tmpChatrooms)
+        // var tmpChatrooms = chatRooms.slice()
+        // tmpChatrooms[findIndexFromID(selectedChat)].name = title
+        // setChatRooms(tmpChatrooms)
+
+
+        var formdata = new FormData();
+        formdata.append("username", username);
+        formdata.append("cookie", cookie);
+        formdata.append("chatroom_name", selectedChat);
+        formdata.append("new_chatroom_name", title)
+
+        var requestOptions = {
+            method: 'POST',
+            body: formdata,
+            redirect: 'follow'
+        };
+          
+        fetch("http://34.80.122.70:5000/change_room_name", requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            if(result === "failed"){
+                alert("change failed")
+                return
+            }
+            if(result === "successful"){
+
+            }
+        })
+        .catch(error => console.log('error', error));
 
         // Call backend for update
         // Use the new initialized stuff to change chatContent and change chatList
     }
 
-    const changeEmoji = (emoji)=>{
-        alert(`Changing emoji to ${emoji}`)
-        setEmoji(emoji)
+    const changeEmoji = (emoji_in)=>{
+        setEmoji(emoji_in)
+
+        socket.emit("emoji_theme", {chatroom_id: selectedChat, emoji_index: emoji_in, theme_index: theme})
     }
 
-    const changeTheme = (themeID)=>{   
-        var t = theme[themeID];  
+    const changeTheme = (theme_in)=>{
+        setTheme(theme_in)
+        socket.emit("emoji_theme", {chatroom_id: selectedChat, emoji_index: emoji, theme_index: theme_in})
+    }
+
+    useEffect(()=>{
+        var t = theme_arr[theme];  
         
         console.log(t)
         for (const property in t) {
@@ -415,16 +542,15 @@ function App(props){
                 ` ${t[property]}`
             );
         }
-        alert(`send to backend: ${themeID}`)
+    }, [theme])
 
-        
-    }
-
+    
     const leaveChatRoom = (evt)=>{
-        var obj = {chatroom_name: findNameFromID(selectedChat)}
+        var obj = {username: username, chatroom_name: findNameFromID(selectedChat)}
         socket.emit("leave", obj)
         var tmp = chatRooms.slice()
         tmp.splice(findIndexFromID(selectedChat), 1);
+        tmp.sort(compare)
         console.log(tmp)
         setChatRooms(tmp);
         setSelectedChat("");
@@ -437,7 +563,7 @@ function App(props){
         var formdata = new FormData();
         formdata.append("username", username);
         formdata.append("cookie", cookie);
-        formdata.append("chatroom_name", selectedChat);
+        formdata.append("chatroom_name", findNameFromID(selectedChat));
         formdata.append("new_member_name", member)
 
         var requestOptions = {
@@ -454,7 +580,7 @@ function App(props){
                 return
             }
             if(result === "successful"){
-                alert("happy")
+                // alert("happy")
                 
                 var tmpChatContent = Object.assign({}, chatContent);
                 tmpChatContent.people.push(member)
@@ -470,9 +596,10 @@ function App(props){
 
     const createNewChatroom = (newName, setNewName) => {
 
-        
-
-        alert(`new room: ${newName}`)
+        if(newName === ""){
+            alert("Room Name Cannot be null")
+            return
+        }
 
         var formdata = new FormData();
         formdata.append("username", username);
@@ -494,23 +621,51 @@ function App(props){
                 return
             }
             if(result === "authentication failed"){
-                alert("weird error")
+                // alert("weird error")
                 console.log("weird error")
                 return
             }
             if(result === "successful"){
-                var tmpChatrooms = chatRooms.slice()
-                var newRoom = newChatListObject(newName)
-                tmpChatrooms.push(newRoom)
-                tmpChatrooms.sort( compare );
-                setChatRooms(tmpChatrooms)
+                formdata = new FormData();
+                formdata.append("username", username);
+                formdata.append("cookie", cookie);
+
+                var requestOptions = {
+                    method: 'POST',
+                    body: formdata,
+                    // mode: "no-cors",
+                    redirect: 'follow'
+                };
+                
+                fetch("http://34.80.122.70:5000/chatrooms", requestOptions)
+                .then(response => response.text())
+                .then(result => {
+                    
+                    console.log("this is my chatroom list")
+                    console.log(result)
+                    result = JSON.parse(result)
+                    console.log("this is what I got from calling the API")
+                    console.log(result)
+                    var tmpChatroom = result["data"]
+                    for(var i in tmpChatroom){
+
+                    }
+                    tmpChatroom.sort( compare );
+                    setChatRooms(tmpChatroom)
+                })
+                .catch(error => {
+                    console.log('error', error)
+                    // alert("Can't Connect to Server")
+                });
+                
+                return
             }
         })
         .catch(error => console.log('error', error));
 
-        
-
         setNewName("")
+
+        
     }
 
     if(!loggedIn){
