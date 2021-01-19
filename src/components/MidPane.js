@@ -44,7 +44,7 @@ function MidPane(props) {
 
                     <div className="Chat_title_container">
                         <div className="Chat_title">
-                            {props.data.chatContent !== undefined?tmpChatTitle:"udef"}
+                            {props.data.chatContent !== undefined?props.data.chatContent.name:"udef"}
                         </div>
                         <div className="rename_button" onClick={(e) => {setEditTitle(true)}}>
                             <FontAwesomeIcon icon={faEdit} className="logo-icon"/>

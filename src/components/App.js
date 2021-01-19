@@ -93,7 +93,6 @@ function App(props){
 
             socket.on('chatroom_name_changed', (data) => {
                 setRecvTitle(data)
-                alert("room changed!")
                 console.log(data); // true
             })
 
@@ -161,8 +160,6 @@ function App(props){
         console.log("someone leave")
         console.log(recvTitle)
         if(selectedChat === recvTitle.room_id){
-            // alert("changing is here")
-            selectedChat = recvTitle.new_name
             var tmpChatContent = Object.assign({}, chatContent);
             tmpChatContent.name = recvTitle.new_name
             setChatContent(tmpChatContent)
@@ -479,23 +476,11 @@ function App(props){
     }
 
     const setNewTitle = (title)=>{
-        // alert(title)
-
-        // var tmpChatContent = Object.assign({}, chatContent);
-        // tmpChatContent.name = title
-        // console.log("updating Chat Content: ")
-        // console.log(chatContent)
-        // setChatContent(tmpChatContent)
-
-        // var tmpChatrooms = chatRooms.slice()
-        // tmpChatrooms[findIndexFromID(selectedChat)].name = title
-        // setChatRooms(tmpChatrooms)
-
 
         var formdata = new FormData();
         formdata.append("username", username);
         formdata.append("cookie", cookie);
-        formdata.append("chatroom_name", selectedChat);
+        formdata.append("room_id", selectedChat);
         formdata.append("new_chatroom_name", title)
 
         var requestOptions = {
