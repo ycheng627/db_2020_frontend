@@ -451,7 +451,6 @@ function App(props){
         setChatRooms([])
         setChatContent({})
         setSelectedChat("")
-        changeTheme(2)
     }
 
     const changeChatRoom = (evt, id) =>{
@@ -674,7 +673,11 @@ function App(props){
             <div className="center-center">
                 <form onSubmit={handleLogin}>
                     <label>
-                    <h1 className="login-title"> NTU Chat </h1>
+                    <h1 className="login-title"> NTU Chat 
+                    
+            {changeTheme(2)}
+            Chat: {selectedChat}
+            </h1>
                     <input
                         type="text"
                         placeholder="Username"
