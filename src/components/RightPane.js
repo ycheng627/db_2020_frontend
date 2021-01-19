@@ -15,7 +15,7 @@ function RightPane(props) {
                 </div>
             </div>
             <div　className="right_people_list">
-                Members: 
+                Members
                 {props.data.chatContent!=undefined && props.data.chatContent.people!=undefined? 
                 (
                     props.data.chatContent.people.map((person, i) => (
@@ -39,7 +39,7 @@ function RightPane(props) {
             </div>
 
             <div className="select-emoji">
-                Emoji:
+                Emoji
                 <div className="emojis-container">
                     <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌴")}}> 🌴 </div>
                     <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🥛")}}> 🥛 </div>
@@ -51,7 +51,7 @@ function RightPane(props) {
             <div className="offset_5">
             </div>
             <div className="select-emoji">
-                Theme:
+                Theme
                 <div className="emojis-container">
                     <div className="emoji" style={{backgroundColor: "#cceca4"}} onClick={(e) => {props.handlers.changeTheme(0)}}></div>
                     <div className="emoji" style={{backgroundColor: "#d5b9a1"}} onClick={(e) => {props.handlers.changeTheme(1)}}></div>
