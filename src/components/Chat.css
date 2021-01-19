@@ -173,6 +173,11 @@
     /*transition: color 0.1s ease-out;*/
 }
 
+.rename_button:hover {
+    color: rgb(159, 178, 189);
+    /*transition: color 0.1s ease-out;*/
+}
+
 .Chat_title {
     font-size: 5vh;
     font-weight: 600;
