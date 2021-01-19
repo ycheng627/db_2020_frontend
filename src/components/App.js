@@ -452,6 +452,7 @@ function App(props){
         setChatContent({})
         setSelectedChat("")
         changeTheme(2, false)
+        changeEmoji(0, false)
     }
 
     const changeChatRoom = (evt, id) =>{
@@ -520,7 +521,7 @@ function App(props){
         // Use the new initialized stuff to change chatContent and change chatList
     }
 
-    const changeEmoji = (emoji_in)=>{
+    const changeEmoji = (emoji_in, do_emit=true)=>{
         setEmoji(emoji_in)
 
         socket.emit("emoji_theme", {chatroom_id: selectedChat, emoji_index: emoji_in, theme_index: theme})
@@ -555,6 +556,10 @@ function App(props){
         tmp.sort(compare)
         console.log(tmp)
         setChatRooms(tmp);
+        if(tmp.length == 0){
+            changeTheme(2, false)
+            changeEmoji(0, false)
+        }
         setSelectedChat("");
         setChatContent([])
     }
