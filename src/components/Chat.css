@@ -255,10 +255,16 @@
     flex: 0 1 90%;
     box-sizing: border-box;
     padding: 5px;
-    border-radius: 8px;
+    border-radius: 18px;
     margin-left: 8px;
     margin-right: 10px;
 }
+
+/*unread message*/
+/*.Chat-message-body.unread {
+    border: solid 1px var(--message-text-color);
+    font-weight: 750;
+}*/
 
 .Chat-message-sender {
     background-color: var(--sender-color);
@@ -267,11 +273,16 @@
     width: 20%;
     box-sizing: border-box;
     padding: 5px;
-    border-radius: 8px;
+    border-radius: 18px;
     margin-left: 4px;
     margin-right: 0px;
     text-align: center;
 }
+/*unread sender*/
+/*.Chat-message-sender.unread {
+    border: solid 1px var(--message-text-color);
+    font-weight: 750;
+}*/
 
 .Chatroom-list-title {
     font-size: 25px;
