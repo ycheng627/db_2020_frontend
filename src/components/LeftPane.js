@@ -16,7 +16,7 @@ function LeftPane(props) {
         var years = (days / 365).toFixed(0);
 
         if(seconds < 60)
-            return `${seconds}s`;
+            return `< 1m`;
         if(minutes < 60)
             return `${minutes}m`;
         if(hours < 24)

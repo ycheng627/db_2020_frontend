@@ -161,7 +161,7 @@ function App(props){
         console.log("someone leave")
         console.log(recvTitle)
         if(selectedChat === recvTitle.room_id){
-            alert("changing is here")
+            // alert("changing is here")
             selectedChat = recvTitle.new_name
             var tmpChatContent = Object.assign({}, chatContent);
             tmpChatContent.name = recvTitle.new_name
@@ -467,7 +467,7 @@ function App(props){
             return
         }
 
-        alert(findNameFromID(selectedChat))
+        // alert(findNameFromID(selectedChat))
         console.log("The chatroom name is:")
         console.log(findNameFromID(selectedChat))
         socket.emit('message', {username: username, chatroom_name: findNameFromID(selectedChat), content: msg})
