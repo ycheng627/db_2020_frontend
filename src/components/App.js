@@ -603,11 +603,6 @@ function App(props){
                 return
             }
             if(result === "successful"){
-                // alert("happy")
-                
-                var tmpChatContent = Object.assign({}, chatContent);
-                tmpChatContent.people.push(member)
-                setChatContent(tmpChatContent)
 
             }
         })
