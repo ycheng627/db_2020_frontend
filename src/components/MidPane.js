@@ -13,6 +13,16 @@ function MidPane(props) {
         messagesEndRef.current.scrollIntoView({ behavior: "auto" })
     }
 
+    const getNickname = (username) => {
+        if(props.data.chatContent != undefined && props.data.chatContent.people != undefined){
+            for(var i in props.data.chatContent.people){
+                if(props.data.chatContent.people[i].username == username){
+                    return props.data.chatContent.people[i].nickname
+                }
+            }
+        }
+    }
+
     const emojis = ["🌴", "🥛", "🐒", "🥺", "🌐"]
 
     useEffect(()=>{
@@ -63,7 +73,7 @@ function MidPane(props) {
                     
                     props.data.chatContent.messages.map(({ sender, body }, i) => (
                         <div className={props.data.username===sender?"Chat-message right":"Chat-message left"} key={i}>
-                            <div className="Chat-message-sender">{sender}</div>
+                            <div className="Chat-message-sender">{getNickname(sender)}</div>
                             <div className="Chat-message-body">{body}</div>
                             <div className="Chat-message-filler"></div>
                         </div>
