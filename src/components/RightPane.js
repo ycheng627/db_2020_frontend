@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Navlink, Switch, Route } from 'react-router-dom'
-import Popup from 'reactjs-popup';
 import './Chat.css';
+import React, {useEffect, useState, useRef } from 'react';
+import { faEdit, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Popup from 'reactjs-popup';
 
 function RightPane(props) {
+
+    const [newNickname, setNewNickname] = useState("")
+
     return (
         <div id="RightPaneContainer">
             <div className="offset_5">
@@ -15,11 +18,41 @@ function RightPane(props) {
                 </div>
             </div>
             <div　className="right_people_list">
-                Members
-                {props.data.chatContent!=undefined && props.data.chatContent.people!=undefined? 
                 (
                     props.data.chatContent.people.map((person, i) => (
-                    <div className="right_person">{person}</div>
+                    <div key={i} className="right_person">
+                        <div className="right-username">{person.username}</div>
+                        <div className="right-nickname"
+                        >{person.nickname}</div>
+
+                        <Popup trigger={
+                                <FontAwesomeIcon icon={faEdit}  className="logo-icon"/>} 
+                        modal>
+                            {close => (
+                                <div className="popup">
+                                    <a className="close" onClick={close}>
+                                        &times;
+                                    </a>
+                                    <h3> New Nickname for {person.username}: </h3>
+                                    <div className="content">
+                                    <input
+                                        className="Left-search-input"
+                                        placeholder="New Nickname"
+                                        value={newNickname}
+                                        onChange={(e) => setNewNickname(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if(e.key === 'Enter'){
+                                                props.handlers.editNickname(person.username, newNickname, setNewNickname);
+                                                close();
+                                            }
+                                        }
+                                    }
+                                    ></input>
+                                    </div>
+                                </div>
+                                )}
+                        </Popup>
+                    </div>
                 )))
                 : 
                 (
@@ -32,6 +65,11 @@ function RightPane(props) {
                     placeholder="Add Member"
                     value={props.data.newMember}
                     onChange={(e) => props.handlers.setNewMember(e.target.value)}
+                    onKeyDown={(e) => {
+                        if(e.key === 'Enter'){
+                            props.handlers.addNewMember(props.data.newMember, props.handlers.setNewMember);
+                        }
+                    }}
                 ></input>
                 <button onClick={(e) => {
                             props.handlers.addNewMember(props.data.newMember, props.handlers.setNewMember);
@@ -41,11 +79,11 @@ function RightPane(props) {
             <div className="select-emoji">
                 Emoji
                 <div className="emojis-container">
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌴")}}> 🌴 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🥛")}}> 🥛 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🐒")}}> 🐒 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🥺")}}> 🥺 </div>
-                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji("🌐")}}> 🌐 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(0)}}> 🌴 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(1)}}> 🥛 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(2)}}> 🐒 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(3)}}> 🥺 </div>
+                    <div className="emoji" onClick={(e) => {props.handlers.changeEmoji(4)}}> 🌐 </div>
                 </div>
             </div>
             <div className="offset_5">

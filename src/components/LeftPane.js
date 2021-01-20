@@ -1,6 +1,4 @@
 import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
-import { Navlink, Switch, Route } from 'react-router-dom'
 import { faSignOutAlt, faPlus} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Popup from 'reactjs-popup';
@@ -18,7 +16,7 @@ function LeftPane(props) {
         var years = (days / 365).toFixed(0);
 
         if(seconds < 60)
-            return `${seconds}s`;
+            return `< 1m`;
         if(minutes < 60)
             return `${minutes}m`;
         if(hours < 24)
@@ -31,7 +29,7 @@ function LeftPane(props) {
     }
 
     const getLastTime = (lastSendDate) =>{
-        var a = msToTime(Number(Date.now() - new Date(lastSendDate).getTime()))
+        var a = msToTime(Number((Date.now()) - new Date(lastSendDate).getTime()))
         return(a)
     }
 
@@ -48,8 +46,8 @@ function LeftPane(props) {
                 </div>
 
                 <Popup trigger={<div id="newRoom" className="LeftTopBarElement">
-                    <FontAwesomeIcon icon={faPlus}  className="logo-icon"/>
-                </div>} 
+                        <FontAwesomeIcon icon={faPlus}  className="logo-icon"/>
+                        </div>} 
                 modal>
                      {close => (
                         <div className="popup">
@@ -86,13 +84,15 @@ function LeftPane(props) {
             ></input>
             <div id="LeftListOfChatRoom">
                 {props.data.chatRooms.map((chatroom)=>(
-                    <div key={chatroom.id} className={chatroom.id==props.data.selectedChat?"LeftIndividualChatRoom selected":"LeftIndividualChatRoom"} 
+                    <div key={chatroom.id} className={`LeftIndividualChatRoom ${chatroom.id===props.data.selectedChat? "selected" : ""} ${chatroom.last_send_date>=chatroom.last_read_date? "bold" : ""}`}
+                    
+                    
                     id={chatroom.id} onClick={(e) => {props.handlers.changeChatRoom(e, chatroom.id)}}>
                         <div className="Chatroom-list-title">{chatroom.name} </div>
                         <div className="Chatroom-list-content"> 
-                            <div className="Chatroom-list-sender">{chatroom.lastMessageSender}:  </div>
-                            <div className="Chatroom-list-message">  {chatroom.lastMessageText}</div>
-                            <div className="Chatroom-list-time">{getLastTime(chatroom.date)}</div>
+                            <div className="Chatroom-list-sender">{chatroom.last_sender}:  </div>
+                            <div className="Chatroom-list-message">  {chatroom.last_message}</div>
+                            <div className="Chatroom-list-time">{getLastTime(chatroom.last_send_date)}</div>
                         
                         </div>
                     </div>
