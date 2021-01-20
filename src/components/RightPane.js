@@ -1,6 +1,13 @@
 import './Chat.css';
+import React, {useEffect, useState, useRef } from 'react';
+import { faEdit, faPaperPlane} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Popup from 'reactjs-popup';
 
 function RightPane(props) {
+
+    const [newNickname, setNewNickname] = useState("")
+
     return (
         <div id="RightPaneContainer">
             <div className="offset_5">
@@ -15,7 +22,39 @@ function RightPane(props) {
                 {props.data.chatContent!==undefined && props.data.chatContent.people!==undefined? 
                 (
                     props.data.chatContent.people.map((person, i) => (
-                    <div key={i} className="right_person">{person}</div>
+                    <div key={i} className="right_person">
+                        <div className="right-username">{person.username}</div>
+                        <div className="right-nickname"
+                        >{person.nickname}</div>
+
+                        <Popup trigger={
+                                <FontAwesomeIcon icon={faEdit}  className="logo-icon"/>} 
+                        modal>
+                            {close => (
+                                <div className="popup">
+                                    <a className="close" onClick={close}>
+                                        &times;
+                                    </a>
+                                    <h3> New Nickname for {person.username}: </h3>
+                                    <div className="content">
+                                    <input
+                                        className="Left-search-input"
+                                        placeholder="New Nickname"
+                                        value={newNickname}
+                                        onChange={(e) => setNewNickname(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if(e.key === 'Enter'){
+                                                props.handlers.editNickname(person.username, newNickname, setNewNickname);
+                                                close();
+                                            }
+                                        }
+                                    }
+                                    ></input>
+                                    </div>
+                                </div>
+                                )}
+                        </Popup>
+                    </div>
                 )))
                 : 
                 (

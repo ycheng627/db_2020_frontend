@@ -46,8 +46,8 @@ function LeftPane(props) {
                 </div>
 
                 <Popup trigger={<div id="newRoom" className="LeftTopBarElement">
-                    <FontAwesomeIcon icon={faPlus}  className="logo-icon"/>
-                </div>} 
+                        <FontAwesomeIcon icon={faPlus}  className="logo-icon"/>
+                        </div>} 
                 modal>
                      {close => (
                         <div className="popup">

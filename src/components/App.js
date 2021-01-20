@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import Chat from "./Chat"
 import db from "./db"
 import theme_arr from "./theme"
+import Popup from 'reactjs-popup';
 
 
 import socketIOClient from "socket.io-client";
@@ -57,6 +58,7 @@ function App(props){
     const [recvJoin, setRecvJoin] = useState("");
     const [recvTitle, setRecvTitle] = useState("");
     const [recvEmojiTheme, setRecvEmojiTheme] = useState("");
+    const [recvNickname, setRecvNickname] = useState("");
     
     
     useEffect(()=>{
@@ -83,6 +85,11 @@ function App(props){
             })
             
             socket.on('message', (data) =>{
+                console.log(data)
+            })
+
+            socket.on('nickname_change_out', (data) =>{
+                setRecvNickname(data)
                 console.log(data)
             })
             
@@ -145,6 +152,20 @@ function App(props){
             setChatContent(tmpChatContent)
         }
     }, [recvEmojiTheme])
+
+    useEffect(()=>{
+        console.log(recvNickname)
+        if(chatContent !== undefined && chatContent.messages !== undefined && selectedChat === recvNickname.room_id){
+            var tmpChatContent = Object.assign({}, chatContent);
+
+            for(var i in tmpChatContent.people){
+                if(tmpChatContent.people[i].username == recvNickname.username){
+                    tmpChatContent.people[i].nickname = recvNickname.new_nickname
+                }
+            }
+            setChatContent(tmpChatContent)
+        }
+    }, [recvNickname])
 
     useEffect(()=>{
         console.log("someone leave")
@@ -386,6 +407,10 @@ function App(props){
     const handleLogin = (evt) => {
         evt.preventDefault();
 
+        if(username === "" || password === ""){
+            alert("Username and Password can't be empty")
+            return;
+        }
 
         var formdata = new FormData();
         formdata.append("username", username);
@@ -493,7 +518,7 @@ function App(props){
         .then(response => response.text())
         .then(result => {
             if(result === "failed"){
-                alert("change failed")
+                alert("room already exist")
                 return
             }
             if(result === "successful"){
@@ -547,6 +572,12 @@ function App(props){
         }
         setSelectedChat("");
         setChatContent([])
+    }
+
+    const editNickname = (targetUser, newNickname, setNewNickname)=>{
+        var obj={room_id: selectedChat, username: targetUser, nickname: newNickname}
+        socket.emit("nickname_change", obj)
+        setNewNickname("")
     }
 
     const addNewMember = (member, setMemberInput) => {
@@ -702,7 +733,7 @@ function App(props){
                      sendMessage: sendMessage, changeChatRoom: changeChatRoom, setLeftFilter: setLeftFilter,
                      setNewTitle: setNewTitle, leaveChatRoom:leaveChatRoom, setNewMember: setNewMember,
                      addNewMember: addNewMember, createNewChatroom:createNewChatroom, changeEmoji: changeEmoji,
-                     changeTheme: changeTheme}}/>
+                     changeTheme: changeTheme, editNickname: editNickname}}/>
             </div>
         )
     }
