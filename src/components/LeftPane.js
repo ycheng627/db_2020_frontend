@@ -54,7 +54,7 @@ function LeftPane(props) {
                             <a className="close" onClick={close}>
                                 &times;
                             </a>
-                            <h3> Room Name: </h3>
+                            <h3> Room Name </h3>
                             <div className="content">
                             <input
                                 className="Left-search-input"

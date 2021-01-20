@@ -95,7 +95,7 @@
     font-size: 14px;
     width: calc(100% - 25px);
     height: calc(11% - 20px);
-    background: var(--search-background);
+    background: var(--message-text-color);
     border: 0;
     border-radius: 8px;
     outline: 0;
@@ -106,6 +106,9 @@
     padding: 10px;
     box-sizing: border-box;
     flex: 0 0 auto;
+}
+.Left-search-input:hover {
+    background: var(--search-background);
 }
 
 #LeftListOfChatRoom {
@@ -200,7 +203,7 @@
     /* width: calc(80% - 20px); */
     width: 50px;
     height: calc(100%-25px);
-    background: var(--search-background);
+    background: var(--message-text-color);
     border: 0;
     border-radius: 8px;
     outline: 0;
@@ -210,6 +213,9 @@
     flex: 1 1 auto;
     resize: none;
 }
+.Chat-input:hover{
+    background: var(--search-background);
+}
 
 .send-icon {
     font-size: 25px;
@@ -218,6 +224,10 @@
     text-align: center;
     padding: 25px 0;
     padding-right: 10px;
+}
+.send-icon:hover {
+    font-size: 29px;
+    cursor: pointer;
 }
 
 .Chat-message {
@@ -245,10 +255,16 @@
     flex: 0 1 90%;
     box-sizing: border-box;
     padding: 5px;
-    border-radius: 8px;
+    border-radius: 18px;
     margin-left: 8px;
     margin-right: 10px;
 }
+
+/*unread message*/
+/*.Chat-message-body.unread {
+    border: solid 1px var(--message-text-color);
+    font-weight: 750;
+}*/
 
 .Chat-message-sender {
     background-color: var(--sender-color);
@@ -257,11 +273,16 @@
     width: 20%;
     box-sizing: border-box;
     padding: 5px;
-    border-radius: 8px;
+    border-radius: 18px;
     margin-left: 4px;
     margin-right: 0px;
     text-align: center;
 }
+/*unread sender*/
+/*.Chat-message-sender.unread {
+    border: solid 1px var(--message-text-color);
+    font-weight: 750;
+}*/
 
 .Chatroom-list-title {
     font-size: 25px;
@@ -362,10 +383,22 @@
     align-items: center;
     /* background: white; */
     font-size: 18px;
+    font-weight: 600;
     color: var(--list-box-color);
 }
 
 .right_person {
+    background-color: none;
+    margin: 4px;
+    border: 0;
+    border-radius: 4px;
+    width: 100%;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 380;
+    flex: 0 0 0%;
+}
+.right_person:hover {
     background-color: var(--box-darker-gray);
     margin: 4px;
     border: 0;
@@ -394,7 +427,7 @@
     font-size: 14px;
     width: calc(100% - 25px);
     height: calc(11% - 20px);
-    background: var(--search-background);
+    background: var(--message-text-color);
     border-radius: 4px;
     border: 0;
     outline: 0;
@@ -403,6 +436,9 @@
     padding: 10px;
     box-sizing: border-box;
     flex: 0 0 70%;
+}
+.right-member-input:hover {
+    background: var(--search-background);
 }
 
 .add-new-member-container {
@@ -429,6 +465,7 @@
 
 .center-center {
     position: relative;
+    background: var(--message-text-color);
     margin: 30px auto;
     padding: 20px 20px 20px;
     margin-top: 10%;
@@ -439,7 +476,7 @@
 }
 
 .login-background {
-    background: var( --background-gray);
+    background: var(--background-gray);
     height: 100%;
     width: 100%;
     position: absolute;
@@ -449,8 +486,9 @@
     font-size: 14px;
     width: calc(100% - 25px);
     height: calc(11% - 20px);
-    background: var(--search-background);
-    border: 0;
+    background: var(--message-text-color);
+    border: solid 2px;
+    border-color: var(--box-darker-gray);
     border-radius: 8px;
     outline: 0;
     margin-right: 15px;
@@ -460,6 +498,9 @@
     padding: 10px;
     box-sizing: border-box;
     flex: 0 0 auto;
+}
+.login-input:hover {
+    background: var(--search-background);
 }
 
 .login-button {
@@ -475,6 +516,9 @@
     cursor: pointer;
     width: 50%;
 }
+.login-button:hover {
+    background-color: var(--icon-hover);
+}
 
 .login-title {
     width: 100%;
@@ -484,9 +528,8 @@
 .popup {
     width: 500px;
     height: 150px;
-    padding: 10px;
+    padding: 20px;
     background: var(--popup-background);
-    border: solid 10px grey;
     border-radius: 10px;
     backdrop-filter: blur(10px);
     transition: width 3s;
@@ -496,8 +539,8 @@
 .close {
     cursor: pointer;
     position: absolute;
-    top: -15px;
-    left: -15px;
+    top: -10px;
+    left: -10px;
     background: white;
     width: 23px;
     height: 23px;
@@ -516,9 +559,21 @@
 
 .emoji {
     flex: 1 1 auto;
+    background-color:none;
+    border: 0;
+    border-radius: 8px;
+    font-size: 18px;
+    text-align: center;
+    cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.emoji:hover {
+    flex: 1 1 auto;
     background-color: var(--box-darker-gray);
     border: 0;
     border-radius: 8px;
+    font-size: 22px;
     text-align: center;
     cursor: pointer;
     margin-left: 5px;
@@ -534,9 +589,6 @@
     align-items: center;
     /* background: white; */
     font-size: 18px;
+    font-weight: 600;
     color: var(--emoji-background);
-}
-
-.bold {
-    /* font-weight: bold; */
 }
