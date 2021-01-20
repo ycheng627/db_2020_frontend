@@ -107,6 +107,7 @@
     box-sizing: border-box;
     flex: 0 0 auto;
 }
+
 .Left-search-input:hover {
     background: var(--search-background);
 }
@@ -213,7 +214,8 @@
     flex: 1 1 auto;
     resize: none;
 }
-.Chat-input:hover{
+
+.Chat-input:hover {
     background: var(--search-background);
 }
 
@@ -225,6 +227,7 @@
     padding: 25px 0;
     padding-right: 10px;
 }
+
 .send-icon:hover {
     font-size: 29px;
     cursor: pointer;
@@ -260,7 +263,10 @@
     margin-right: 10px;
 }
 
+
 /*unread message*/
+
+
 /*.Chat-message-body.unread {
     border: solid 1px var(--message-text-color);
     font-weight: 750;
@@ -278,7 +284,11 @@
     margin-right: 0px;
     text-align: center;
 }
+
+
 /*unread sender*/
+
+
 /*.Chat-message-sender.unread {
     border: solid 1px var(--message-text-color);
     font-weight: 750;
@@ -397,7 +407,10 @@
     font-size: 18px;
     font-weight: 380;
     flex: 0 0 0%;
+    display: flex;
+    flex-direction: row;
 }
+
 .right_person:hover {
     background-color: var(--box-darker-gray);
     margin: 4px;
@@ -411,15 +424,20 @@
 }
 
 .right-username {
-    flex: 0 0 auto;
+    flex: 1 1 auto;
     width: 170px;
     padding: 0px;
     /* line-height: 1.5em; */
 }
 
+.right-nickname-sep {
+    margin-right: 50px;
+}
+
 .right-nickname .Chat-input {
+    margin-right: 100px;
     padding: 0;
-    flex: 0 0 auto;
+    flex: 1 1 auto;
     width: 170px;
 }
 
@@ -437,8 +455,13 @@
     box-sizing: border-box;
     flex: 0 0 70%;
 }
+
 .right-member-input:hover {
     background: var(--search-background);
+}
+
+.nickname-button {
+    margin-right: 50px;
 }
 
 .add-new-member-container {
@@ -499,6 +522,7 @@
     box-sizing: border-box;
     flex: 0 0 auto;
 }
+
 .login-input:hover {
     background: var(--search-background);
 }
@@ -516,6 +540,7 @@
     cursor: pointer;
     width: 50%;
 }
+
 .login-button:hover {
     background-color: var(--icon-hover);
 }
@@ -559,7 +584,7 @@
 
 .emoji {
     flex: 1 1 auto;
-    background-color:none;
+    background-color: none;
     border: 0;
     border-radius: 8px;
     font-size: 18px;
@@ -568,6 +593,7 @@
     margin-left: 5px;
     margin-right: 5px;
 }
+
 .emoji:hover {
     flex: 1 1 auto;
     background-color: var(--box-darker-gray);

@@ -18,41 +18,44 @@ function RightPane(props) {
                 </div>
             </div>
             <div　className="right_people_list">
+            Members
+                {props.data.chatContent!=undefined && props.data.chatContent.people!=undefined? 
                 (
                     props.data.chatContent.people.map((person, i) => (
-                    <div key={i} className="right_person">
-                        <div className="right-username">{person.username}</div>
-                        <div className="right-nickname"
-                        >{person.nickname}</div>
-
-                        <Popup trigger={
-                                <FontAwesomeIcon icon={faEdit}  className="logo-icon"/>} 
-                        modal>
-                            {close => (
-                                <div className="popup">
-                                    <a className="close" onClick={close}>
-                                        &times;
-                                    </a>
-                                    <h3> New Nickname for {person.username}: </h3>
-                                    <div className="content">
-                                    <input
-                                        className="Left-search-input"
-                                        placeholder="New Nickname"
-                                        value={newNickname}
-                                        onChange={(e) => setNewNickname(e.target.value)}
-                                        onKeyDown={(e) => {
-                                            if(e.key === 'Enter'){
-                                                props.handlers.editNickname(person.username, newNickname, setNewNickname);
-                                                close();
+                        <div key={i} className="right_person">
+                            <div className="right-username">{person.username}</div>
+                            <div className="right-nickname"
+                            >{person.nickname}</div>
+                            <div className="right-nickname-sep"> </div>
+                            <Popup trigger={
+                                    <FontAwesomeIcon icon={faEdit}  className="logo-icon nickname-button"/>} 
+                            modal>
+                                {close => (
+                                    <div className="popup">
+                                        <a className="close" onClick={close}>
+                                            &times;
+                                        </a>
+                                        <h3> New Nickname for {person.username}: </h3>
+                                        <div className="content">
+                                        <input
+                                            className="Left-search-input"
+                                            placeholder="New Nickname"
+                                            value={newNickname}
+                                            onChange={(e) => setNewNickname(e.target.value)}
+                                            onKeyDown={(e) => {
+                                                if(e.key === 'Enter'){
+                                                    props.handlers.editNickname(person.username, newNickname, setNewNickname);
+                                                    close();
+                                                }
                                             }
                                         }
-                                    }
-                                    ></input>
+                                        ></input>
+                                        </div>
                                     </div>
-                                </div>
-                                )}
-                        </Popup>
-                    </div>
+                                    )}
+                            </Popup>
+                        </div>
+                
                 )))
                 : 
                 (
